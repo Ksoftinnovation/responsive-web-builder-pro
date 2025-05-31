@@ -7,9 +7,11 @@ import CategoryGrid from "@/components/CategoryGrid";
 import MobileMenu from "@/components/MobileMenu";
 import HeroSection from "@/components/HeroSection";
 import FeaturedSection from "@/components/FeaturedSection";
+import DesktopCategoryMenu from "@/components/DesktopCategoryMenu";
 
 const Index = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
 
   const mainCategories = [
     "New In", "Sale", "Women Clothing", "Beachwear", "Kids", "Curve", 
@@ -45,15 +47,21 @@ const Index = () => {
             </div>
 
             {/* Desktop navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-8 relative">
               {mainCategories.slice(0, 6).map((category) => (
-                <a
+                <div
                   key={category}
-                  href="#"
-                  className="text-sm hover:text-purple-600 transition-colors"
+                  className="relative"
+                  onMouseEnter={() => setHoveredCategory(category)}
+                  onMouseLeave={() => setHoveredCategory(null)}
                 >
-                  {category}
-                </a>
+                  <a
+                    href="#"
+                    className="text-sm hover:text-purple-600 transition-colors py-2 block"
+                  >
+                    {category}
+                  </a>
+                </div>
               ))}
             </nav>
 
@@ -98,6 +106,12 @@ const Index = () => {
             </div>
           </div>
         </div>
+
+        {/* Desktop Category Menu */}
+        <DesktopCategoryMenu 
+          category={hoveredCategory || ""} 
+          isVisible={hoveredCategory !== null} 
+        />
       </header>
 
       {/* Mobile Menu */}
