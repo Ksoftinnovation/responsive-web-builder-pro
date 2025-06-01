@@ -1,6 +1,28 @@
 
 import { useState } from "react";
 
+interface MenuItem {
+  name: string;
+  image: string;
+  isViewAll?: boolean;
+  badge?: string;
+}
+
+interface CategoryContent {
+  mainSection: {
+    title: string;
+    items: MenuItem[];
+  };
+  sideSection?: {
+    title: string;
+    items: MenuItem[];
+  };
+  bottomSection?: {
+    title: string;
+    items: MenuItem[];
+  };
+}
+
 interface DesktopCategoryMenuProps {
   category: string;
   isVisible: boolean;
@@ -8,7 +30,7 @@ interface DesktopCategoryMenuProps {
 
 const DesktopCategoryMenu = ({ category, isVisible }: DesktopCategoryMenuProps) => {
   // Define content for different main categories
-  const getCategoryContent = (categoryName: string) => {
+  const getCategoryContent = (categoryName: string): CategoryContent => {
     switch (categoryName.toLowerCase()) {
       case "new in":
         return {
